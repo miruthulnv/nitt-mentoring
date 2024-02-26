@@ -70,7 +70,7 @@ const router = useRouter()
 const facultyId = route.params.facultyId;
 const faculty = await useFaculty(Number(facultyId))
 
-const mentees = (await useSudoMentee()).map(mentee => ({ ...mentee, mentor: mentee.mentor || { name: "Not Assigned" } }))
+const mentees = (await useSudoMentee())?.map(mentee => ({ ...mentee, mentor: mentee.mentor || { name: "Not Assigned" } }))
 if (!faculty) nextTick(() => router.go(-1))
 else mentees.sort((a, b) => a.mentor_id === faculty.id && b.mentor_id !== faculty.id ? -1 : a.mentor_id !== faculty.id && b.mentor_id === faculty.id ? 1 : 0)
 

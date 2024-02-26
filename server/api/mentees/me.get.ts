@@ -26,12 +26,12 @@ export default defineEventHandler(async (e) => {
     }
     const user = await client.prisma.faculty.findFirst({
       where: { user_id: Number(jwtPayload.id) },
-      include: { mentees: true },
+      include: { mentees: true, meetings: true },
     });
     if (user) {
       const users = user.mentees;
-      return users.map((user) =>
-        client.manager.createStudent({ ...user, mentor: user })
+      return users.map((data) =>
+        client.manager.createStudent({ ...data, mentor: user })
       );
     } else {
       throw createError({

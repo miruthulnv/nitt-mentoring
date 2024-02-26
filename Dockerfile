@@ -8,15 +8,15 @@ WORKDIR /app
 RUN apk --no-cache add openssh g++ make python3 git
 
 # copy over package.json files
-COPY package.json /app/
+COPY package*.json .
 
 # install all depencies
 RUN npm i
 
-# generate types
-RUN npm run prisma-generate
+COPY . .
 
-RUN npm run db_push
+# generate types
+RUN npx prisma generate --schema=/app/server/utils/prisma/schema.prisma
 
 # copy over all files to the work directory
 ADD . /app

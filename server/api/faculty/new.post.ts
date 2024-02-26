@@ -52,18 +52,25 @@ export default defineEventHandler(async (e) => {
       10,
     );
     try {
-      const user = await client.prisma.users.create({
-        data: { username: body.username, password: encryptedPass, level: body.level || 1 },
+      let userCreated: any;
+      let facultyCreated: any;
+      await client.prisma.$transaction(async (prisma) => {
+        userCreated = await prisma.users.create({
+          data: { username: body.username, password: encryptedPass, level: body.level || 1 },
+        });
+        facultyCreated = await prisma.faculty.create({
+          data: {
+            user_id: userCreated.id,
+            name: body.name,
+            department_id: body.department,
+          },
+        });
       });
-      await client.prisma.faculty.create({
-        data: {
-          id: body.faculty_id,
-          user_id: user.id,
-          name: body.name,
-          department_id: body.department,
-        },
-      });
-      return { message: "Account created successfully!", id: user.id };
+      if (userCreated && facultyCreated) {
+        return { message: "Account created successfully!", id: userCreated.id };
+      } else {
+        throw new Error("Failed to create user or faculty");
+      }
     } catch (err) {
       if (err instanceof Error) {
         if (err.name === "PrismaClientKnownRequestError") {
@@ -73,16 +80,21 @@ export default defineEventHandler(async (e) => {
             const field = err.meta.target; //err.message.match(/\(`(\w+)`\)/);
             throw createError({
               statusCode: 400,
-              statusText: `An account already exist with the provided ${
-                field[0].split("_").join(" ")
-              }`,
+              message: err.message
+              // statusText: `An account already exist with the provided ${
+              //   field[0].split("_").join(" ")
+              // }`,
             });
           }
         }
       }
+      console.log(err);
       throw createError({
         statusCode: 400,
-        statusText: "Invalid Form Body",
+        message: "Error creating account"
+        // statusText: `An account already exist with the provided ${
+        //   field[0].split("_").join(" ")
+        // }`,
       });
     }
   }

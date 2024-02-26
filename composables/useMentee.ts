@@ -67,10 +67,14 @@ export async function useSudoMentee(regno?: string) {
       return false;
     }
   } else {
-    const users = await $fetch<PartialStudent[]>(`/api/mentees/dept`, {
-      method: "GET",
-      headers: { "Authorization": `Bearer ${auth.value}` },
-    });
-    return users;
+    try {
+      const users = await $fetch<PartialStudent[]>(`/api/mentees/dept`, {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${auth.value}` },
+      });
+      return users;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

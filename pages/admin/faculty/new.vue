@@ -78,7 +78,7 @@ const handleSubmit = async (e: Event) => {
         password: formData.get("password"),
         level: Math.min(Number(formData.get("level")), 2),
         department: formData.get("department"),
-        faculty_id: Number(formData.get("faculty_id"))
+        // faculty_id: Number(formData.get("faculty_id"))
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
