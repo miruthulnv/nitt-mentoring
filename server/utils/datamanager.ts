@@ -9,17 +9,19 @@ import {
 export const DataManager = {
   createPartialFaculty(data: any): FacultyInfo {
     return {
-      id: data?.id || -1,
       name: data?.name || "Not Assigned",
       department: data?.department || "Not Assigned",
+      id: data?.id || "Not Assigned",
+      user_id: data?.user_id || "Not Assigned",
     };
   },
   createFaculty(data: any): Faculty {
     return {
-      id: data.id,
       name: data.name,
       department: data.department,
       mentees: data.mentees.map((x: any) => this.createPartialStudent(x)),
+      id: data?.id,
+      user_id: data?.user_id,
     };
   },
   createPartialStudent(data: any): PartialStudent {
@@ -145,16 +147,17 @@ export const DataManager = {
   },
   createPartialMeeting(
     data: any,
-  ): { discussion: string; id: number; date: Date } {
+  ): { discussion: string; id: number; meeting_number: number; date: Date } {
     return {
       id: data.id,
+      meeting_number: data.meeting_number,
       date: new Date(data.date),
       discussion: data.discussion,
     };
   },
   createMeeting(data: any): Meeting {
     return {
-      id: data.id,
+      meeting_number: data.meeting_number,
       date: new Date(data.date),
       discussion: data.discussion,
       mentee: this.createPartialStudent(data.mentee),

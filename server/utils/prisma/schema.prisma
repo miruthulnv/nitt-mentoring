@@ -1,178 +1,157 @@
-datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
 }
 
-generator client {
-    provider = "prisma-client-js"
-    binaryTargets = ["native", "windows", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x"]
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model users {
-    id       Int       @id @default(autoincrement())
-    // 0 - student
-    // 1 - faculty
-    // 2 - hod
-    // 3 - admin
-    level    Int       @default(0)
-    username String    @unique
-    password String
-    mentor   faculty?
-    mentee   students?
+  id       Int       @id @default(autoincrement())
+  level    Int       @default(0)
+  username String    @unique
+  password String
+  mentor   faculty?
+  mentee   students?
 }
 
 model faculty {
-    id            Int         @id
-    name          String
-    user          users       @relation(references: [id], fields: [user_id])
-    user_id       Int         @unique
-    mentees       students[]
-    department    department? @relation(fields: [department_id], references: [id])
-    department_id String
-    meetings      meetings[]
+  id            Int        @id @default(autoincrement())
+  name          String
+  user_id       Int        @unique
+  department_id String
+  department    department @relation(fields: [department_id], references: [id])
+  user          users      @relation(fields: [user_id], references: [id])
+  meetings      meetings[]
+  mentees       students[]
 }
 
-model students{
-    id          Int    @id @default(autoincrement())
-    user        users  @relation(references: [id], fields: [user_id])
-    user_id     Int    @unique
-    register_no String @unique
-    name        String
-    year        String
-    section     String
-    batch       Int
-
-    // Whether they can edit their profile
-    editable_personal Boolean @default(false)
-
-    // To be filled by student
-    gender          String?
-    period_of_study String?
-    blood_group     String?
-    mobile_number   String?
-    whatsapp_number String?
-    date_of_birth   DateTime?
-    email_id        String?
-
-    // Father Info
-    f_name            String?
-    f_occupation      String?
-    f_mobile_number   String?
-    f_whatsapp_number String?
-    f_email_id        String?
-    f_address         String?
-
-    // Mother Info
-    m_name            String?
-    m_occupation      String?
-    m_mobile_number   String?
-    m_whatsapp_number String?
-    m_email_id        String?
-    m_address         String?
-
-    // Past Academic Info
-    sslc_board       String?
-    sslc_institution String?
-    sslc_percentage  String?
-    sslc_years       String?
-    hsc_board        String?
-    hsc_institution  String?
-    hsc_percentage   String?
-    hsc_years        String?
-    jee_rank         Int?
-    jee_score        Int?
-
-    // Achievements
-    positions_of_responsibility String?
-    scholarships                String?
-    competitions                String?
-    special_talents             String?
-    role_model                  String?
-    objectives                  String?
-    extra_curricular            String?
-
-    // Filled later
-    reassessment_info String?
-    placement_studies String?
-    student_comments  String?
-
-    // Academic
-    academics academics[]
-
-    // Relations
-    department    department @relation(references: [id], fields: [department_id])
-    department_id String
-    mentor_id     Int?
-    mentor        faculty?   @relation(references: [id], fields: [mentor_id])
-    meetings      meetings[]
+model students {
+  id                          Int         @id @default(autoincrement())
+  user_id                     Int         @unique
+  register_no                 String      @unique
+  name                        String
+  year                        String
+  section                     String
+  batch                       Int
+  editable_personal           Boolean     @default(false)
+  gender                      String?
+  period_of_study             String?
+  blood_group                 String?
+  mobile_number               String?
+  whatsapp_number             String?
+  date_of_birth               DateTime?
+  email_id                    String?
+  f_name                      String?
+  f_occupation                String?
+  f_mobile_number             String?
+  f_whatsapp_number           String?
+  f_email_id                  String?
+  f_address                   String?
+  m_name                      String?
+  m_occupation                String?
+  m_mobile_number             String?
+  m_whatsapp_number           String?
+  m_email_id                  String?
+  m_address                   String?
+  sslc_board                  String?
+  sslc_institution            String?
+  sslc_percentage             String?
+  sslc_years                  String?
+  hsc_board                   String?
+  hsc_institution             String?
+  hsc_percentage              String?
+  hsc_years                   String?
+  jee_rank                    Int?
+  jee_score                   Int?
+  positions_of_responsibility String?
+  scholarships                String?
+  competitions                String?
+  special_talents             String?
+  role_model                  String?
+  objectives                  String?
+  extra_curricular            String?
+  reassessment_info           String?
+  placement_studies           String?
+  student_comments            String?
+  department_id               String
+  mentor_id                   Int?
+  academics                   academics[]
+  meetings                    meetings[]
+  department                  department  @relation(fields: [department_id], references: [id])
+  mentor                      faculty?    @relation(fields: [mentor_id], references: [id])
+  user                        users       @relation(fields: [user_id], references: [id])
 }
 
 model academics {
-    id                   Int      @id @default(autoincrement())
-    student              students @relation(references: [register_no], fields: [register_no])
-    year                 String
-    register_no          String
-    special              String?
-    academics            String?
-    clubs                String?
-    disciplinary_actions String?  @default("None")
-    os_sem               Int
-    os_academic_year     String?
-    os_hostel            String?
-    os_subject_1_name    String?
-    os_subject_1_grade   String?
-    os_subject_2_name    String?
-    os_subject_2_grade   String?
-    os_subject_3_name    String?
-    os_subject_3_grade   String?
-    os_subject_4_name    String?
-    os_subject_4_grade   String?
-    os_subject_5_name    String?
-    os_subject_5_grade   String?
-    os_subject_6_name    String?
-    os_subject_6_grade   String?
-    os_subject_7_name    String?
-    os_subject_7_grade   String?
-    os_subject_8_name    String?
-    os_subject_8_grade   String?
-    os_subject_9_name    String?
-    os_subject_9_grade   String?
-    es_sem               Int
-    es_academic_year     String?
-    es_hostel            String?
-    es_subject_1_name    String?
-    es_subject_1_grade   String?
-    es_subject_2_name    String?
-    es_subject_2_grade   String?
-    es_subject_3_name    String?
-    es_subject_3_grade   String?
-    es_subject_4_name    String?
-    es_subject_4_grade   String?
-    es_subject_5_name    String?
-    es_subject_5_grade   String?
-    es_subject_6_name    String?
-    es_subject_6_grade   String?
-    es_subject_7_name    String?
-    es_subject_7_grade   String?
-    es_subject_8_name    String?
-    es_subject_8_grade   String?
-    es_subject_9_name    String?
-    es_subject_9_grade   String?
+  id                   Int      @id @default(autoincrement())
+  year                 String
+  register_no          String
+  special              String?
+  academics            String?
+  clubs                String?
+  disciplinary_actions String?  @default("None")
+  os_sem               Int
+  os_academic_year     String?
+  os_hostel            String?
+  os_subject_1_name    String?
+  os_subject_1_grade   String?
+  os_subject_2_name    String?
+  os_subject_2_grade   String?
+  os_subject_3_name    String?
+  os_subject_3_grade   String?
+  os_subject_4_name    String?
+  os_subject_4_grade   String?
+  os_subject_5_name    String?
+  os_subject_5_grade   String?
+  os_subject_6_name    String?
+  os_subject_6_grade   String?
+  os_subject_7_name    String?
+  os_subject_7_grade   String?
+  os_subject_8_name    String?
+  os_subject_8_grade   String?
+  os_subject_9_name    String?
+  os_subject_9_grade   String?
+  es_sem               Int
+  es_academic_year     String?
+  es_hostel            String?
+  es_subject_1_name    String?
+  es_subject_1_grade   String?
+  es_subject_2_name    String?
+  es_subject_2_grade   String?
+  es_subject_3_name    String?
+  es_subject_3_grade   String?
+  es_subject_4_name    String?
+  es_subject_4_grade   String?
+  es_subject_5_name    String?
+  es_subject_5_grade   String?
+  es_subject_6_name    String?
+  es_subject_6_grade   String?
+  es_subject_7_name    String?
+  es_subject_7_grade   String?
+  es_subject_8_name    String?
+  es_subject_8_grade   String?
+  es_subject_9_name    String?
+  es_subject_9_grade   String?
+  student              students @relation(fields: [register_no], references: [register_no])
 }
 
 model meetings {
-    id         Int      @id @default(autoincrement())
-    date       DateTime
-    discussion String
-    mentee     students @relation(references: [register_no], fields: [mentee_id])
-    mentee_id  String
-    mentor     faculty  @relation(references: [id], fields: [mentor_id])
-    mentor_id  Int
+  date           DateTime
+  discussion     String
+  mentee_id      String
+  mentor_id      Int
+  id             Int      @id @default(autoincrement())
+  meeting_number Int
+  mentee         students @relation(fields: [mentee_id], references: [register_no])
+  mentor         faculty  @relation(fields: [mentor_id], references: [id])
 }
 
 model department {
-    name     String
-    id       String     @id
-    faculty  faculty[]
-    students students[]
+  name     String
+  id       String     @id
+  faculty  faculty[]
+  students students[]
 }
