@@ -25,15 +25,18 @@ export type Department = {
 };
 
 export type FacultyInfo = {
-  id: number;
   name: string;
   department: Department;
-};
-export type Faculty = FacultyInfo & {
   id: number;
+  user_id: number;
+};
+
+export type Faculty = FacultyInfo & {
   name: string;
   department: Department;
   mentees: PartialStudent[];
+  id: number;
+  user_id: number;
 };
 
 export type PartialStudent = {
@@ -123,7 +126,7 @@ type ParentInfo = {
 };
 
 export type Meeting = {
-  id: number;
+  meeting_number: number;
   date: Date;
   discussion: string;
   mentee: PartialStudent;
