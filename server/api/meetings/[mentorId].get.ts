@@ -19,9 +19,14 @@ export default defineEventHandler(async (e) => {
             });
         }
         const mentorId = getRouterParam(e, "mentorId");
+
         if (!mentorId) return false;
         const meeting = await client.prisma.meetings.findMany({
             where: { mentor_id: parseInt(mentorId) },
+            orderBy: {
+                meeting_number: 'asc',
+            },
+            distinct: "meeting_number"
         });
         if (meeting) {
             if (

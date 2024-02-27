@@ -42,17 +42,21 @@ export default defineEventHandler(async (e) => {
         where: { user_id: Number(jwtPayload.id) },
       });
       if (!user) throw "No user found.";
-      const lastMeeting = await client.prisma.meetings.findFirst({
-        where: {
-          mentee_id: body.mentee_id,
-        },
-        orderBy: {
-          meeting_number: 'desc',
-        },
-      });
       let nextMeetingNumber = 1;
-      if (lastMeeting) {
-        nextMeetingNumber = lastMeeting.meeting_number + 1;
+      try {
+        const lastMeeting = await client.prisma.meetings.findFirst({
+          where: {
+            mentee_id: body.mentee_id,
+          },
+          orderBy: {
+            meeting_number: 'desc',
+          },
+        });
+        if (lastMeeting) {
+          nextMeetingNumber = lastMeeting.meeting_number + 1;
+        }
+      } catch (err) {
+        console.log(err);
       }
       const newMeeting = await client.prisma.meetings.create({
         data: { meeting_number: nextMeetingNumber, date: new Date(body.date), discussion: body.discussion, mentor_id: user.id, mentee_id: body.mentee_id },
