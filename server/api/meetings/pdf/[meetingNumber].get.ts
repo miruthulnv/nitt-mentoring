@@ -1,4 +1,4 @@
-import { Client } from "../../utils/database.js";
+import { Client } from "../../../utils/database.js";
 
 const client = new Client();
 export default defineEventHandler(async (e) => {
@@ -19,10 +19,23 @@ export default defineEventHandler(async (e) => {
             });
         }
         const meetingNumber = getRouterParam(e, "meetingNumber");
-        console.log("meetingNo", meetingNumber);
         if (!meetingNumber) return false;
         const meeting = await client.prisma.meetings.findMany({
-            where: { meeting_number: parseInt(meetingNumber) },
+            where: {
+                meeting_number: parseInt(meetingNumber),
+                mentor: {
+                    user_id: Number(jwtPayload.id)
+                }
+            },
+            include: {
+                mentee: {
+                    select: {
+                        id: true,
+                        register_no: true,
+                        name: true
+                    }
+                }
+            },
         });
         if (meeting) {
             if (
