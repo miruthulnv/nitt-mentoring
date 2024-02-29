@@ -18,7 +18,7 @@ model users {
 }
 
 model faculty {
-  id            Int        @id @default(autoincrement())
+  id            Int        @id
   name          String
   user_id       Int        @unique
   department_id String

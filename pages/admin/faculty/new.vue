@@ -44,6 +44,13 @@
                         <option :value="2">HOD</option>
                     </select>
                 </div>
+                <div class="flex flex-col items-center gap-2">
+                    <label htmlFor="faculty_field" class="w-full text-start">
+                        Faculty Id
+                    </label>
+                    <input name="faculty_id" id="faculty_field" type="text" placeholder="Faculty Id"
+                        class="p-2 w-full lg:w-96 rounded-md shadow-md" />
+                </div>
                 <MiscMessage
                     :class="`${message.text ? `opacity-100` : `opacity-0`} transition duration-500 ease-in-out w-full lg:w-96`"
                     :type="message.type">
@@ -78,7 +85,7 @@ const handleSubmit = async (e: Event) => {
         password: formData.get("password"),
         level: Math.min(Number(formData.get("level")), 2),
         department: formData.get("department"),
-        // faculty_id: Number(formData.get("faculty_id"))
+        faculty_id: formData.get("faculty_id")
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;

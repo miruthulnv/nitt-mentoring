@@ -40,7 +40,7 @@ export default defineEventHandler(async (e) => {
     }
 
     if (
-      !body.username || !body.password || !body.name || !body.department
+      !body.username || !body.password || !body.name || !body.department || !body.faculty_id
     ) {
       throw createError({
         statusCode: 400,
@@ -60,6 +60,7 @@ export default defineEventHandler(async (e) => {
         });
         facultyCreated = await prisma.faculty.create({
           data: {
+            id: parseInt(body.faculty_id),
             user_id: userCreated.id,
             name: body.name,
             department_id: body.department,
