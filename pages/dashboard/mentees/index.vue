@@ -27,31 +27,51 @@
                 <option value="">Select Meeting Number</option>
                 <option v-for="(meeting, index) in meetingNumbers" :value="meeting.meeting_number">{{ meeting?.meeting_number }}</option>
             </select>
-            <button class="bg-nitMaroon-600 text-white rounded-md p-2" @click="exportToPDF">Export to PDF</button>
+            <button :class="['text-white', 'rounded-md', 'p-2', !selectedMeetingNumber ?'bg-nitMaroon-300' : 'bg-nitMaroon-600']" :disabled="!selectedMeetingNumber" @click="exportToPDF">Export to PDF</button>
         </div>
         <div class="flex flex-col space-y-4">
             <EditableMentee v-for="mentee in computedMentees" :mentee="mentee" :key="mentee.meeting_number" />
         </div>
+        <!-- Start of PDF Template -->
         <div ref="pdfContainer" :style="{ visibility: exportToPdfMode ? 'visible' : 'hidden' }">
-            <table class="w-full border-collapse border border-gray-700">
+            <div class="flex items-center justify-center gap-4 mb-3">
+                <img src="/nitt_logo_min.webp" class="w-20 h-20" />
+                <h1 class="text-lg lg:text-3xl font-bold pb-6">National Institute of Technology Tiruchirappalli</h1>
+            </div>
+            <hr class="bg-black h-[3px]"/>
+            <div class="flex gap-6 items-center justify-center pt-4">
+                <h1 class="text-xl lg:text-2xl font-bold pb-6">Mentor-Mentee Meeting #{{selectedMeetingNumber}}</h1>
+            </div>
+            <div class="flex gap-6 items-center pb-2 pt-2 font-semibold">
+                <div class="w-1/2 flex">
+                    <div class="w-40">Faculty Name</div>
+                    <div class="w-60">: <span class="pl-2">{{mentees[0]?.mentor?.name}}</span></div>
+                </div>
+                <div class="w-1/2 flex">
+                    <div class="w-40">Department</div>
+                    <div class="w-60">: <span class="pl-2">{{mentees[0]?.mentor?.department}}</span></div>
+                </div>
+            </div>
+            <table class="w-full border-collapse border border-gray-700 mt-5">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="px-4 py-2 text-left">Sl. No</th>
-                        <th class="px-4 py-2 text-left">Reg. No</th>
-                        <th class="px-4 py-2 text-left">Name</th>
-                        <th class="px-4 py-2 text-left">Discussion</th>
+                        <th class="px-4 py-2 text-left border-r border-gray-700">Sl. No</th>
+                        <th class="px-4 py-2 text-left border-r border-gray-700">Reg. No</th>
+                        <th class="px-4 py-2 text-left border-r border-gray-700">Name</th>
+                        <th class="px-4 py-2 text-left border-r border-gray-700">Discussion</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(meeting, index) in meetings" :key="meeting.meeting_number" class="border-t border-gray-700">
-                        <td class="px-4 py-2">{{ index + 1 }}</td>
-                        <td class="px-4 py-2">{{ meeting?.mentee?.register_no }}</td>
-                        <td class="px-4 py-2">{{ meeting?.mentee?.name }}</td>
-                        <td class="px-4 py-2">{{ meeting?.discussion }}</td>
+                        <td class="px-4 py-2 border-r border-gray-700">{{ index + 1 }}</td>
+                        <td class="px-4 py-2 border-r border-gray-700">{{ meeting?.mentee?.register_no }}</td>
+                        <td class="px-4 py-2 border-r border-gray-700">{{ meeting?.mentee?.name }}</td>
+                        <td class="px-4 py-2 border-r border-gray-700">{{ meeting?.discussion }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <!-- End of PDF Template -->
     </div>
 </template>
 
@@ -106,13 +126,14 @@ export default {
         exportToPDF() {
             if (typeof window !== 'undefined') {
                 exportToPdfMode.value = true;
+                const filename = `Mentor_Mentee_Meeting_List.pdf`;
                 import('html2pdf.js').then((html2pdf) => {
                     html2pdf.default(this.$refs.pdfContainer, {
-                        margin: 1,
-                        filename: 'document.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
+                        margin: 0.7,
+                        filename: filename,
+                        image: { type: 'jpeg', quality: 1 },
                         html2canvas: { dpi: 192, letterRendering: true },
-                        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+                        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
                     });
                     exportToPdfMode.value = false;
                 }).catch(error => {

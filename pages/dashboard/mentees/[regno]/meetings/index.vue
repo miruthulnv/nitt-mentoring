@@ -118,7 +118,7 @@ if (!mentee) {
         navigateTo("/dashboard")
     })
 } else {
-    meetings.value = mentee.meetings.map(x => ({ ...x, date: new Date(x.date) })).sort((a, b) => b.id - a.id);
+    meetings.value = mentee.meetings.map(x => ({ ...x, date: new Date(x.date) }));
     //  meetings.value = mentee.meetings.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
