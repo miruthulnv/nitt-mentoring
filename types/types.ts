@@ -126,6 +126,7 @@ type ParentInfo = {
 };
 
 export type Meeting = {
+  id: number;
   meeting_number: number;
   date: Date;
   discussion: string;
