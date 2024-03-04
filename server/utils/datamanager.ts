@@ -10,7 +10,7 @@ export const DataManager = {
   createPartialFaculty(data: any): FacultyInfo {
     return {
       name: data?.name || "Not Assigned",
-      department: data?.department || "Not Assigned",
+      department: data?.department?.name || "Not Assigned",
       id: data?.id || "Not Assigned",
       user_id: data?.user_id || "Not Assigned",
     };
