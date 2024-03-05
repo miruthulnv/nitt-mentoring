@@ -22,7 +22,11 @@ export default defineEventHandler(async (e) => {
     const mentee = await client.prisma.students.findFirst({
       where: { register_no: regno },
       include: {
-        meetings: true,
+        meetings: {
+          orderBy: {
+            id: "asc"
+          }
+        },
         mentor: true,
         academics: true,
       }
