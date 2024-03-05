@@ -2,6 +2,7 @@ import { Client } from "../../utils/database.js";
 
 const client = new Client();
 export default defineEventHandler(async (e) => {
+
   const auth = getHeader(e, "Authorization");
   if (!auth || !auth.startsWith("Bearer ")) {
     // Not a valid auth token
@@ -18,9 +19,8 @@ export default defineEventHandler(async (e) => {
         statusText: "Session expired. Please login again.",
       });
     }
-    const meetingId = getRouterParam(e, "meetingId");
     const body = await readBody<
-      { date: Date; discussion: string; mentee_id: string }
+      { meetingId: meetingId; date: Date; discussion: string; mentee_id: string }
     >(e);
     if (
       ["date", "discussion"].some((k) => !Object.hasOwn(body, k))
@@ -32,7 +32,7 @@ export default defineEventHandler(async (e) => {
     }
     try {
       await client.prisma.meetings.update({
-        where: { id: Number(meetingId) },
+        where: { id: body.meetingId },
         data: {
           date: new Date(body.date),
           discussion: body.discussion,
@@ -40,10 +40,10 @@ export default defineEventHandler(async (e) => {
       });
       return { message: "Meeting updated successfully!" };
     } catch (err) {
-      console.log(err);
       throw createError({
         statusCode: 400,
         statusText: "Invalid Form Body",
+        message: err
       });
     }
   }
