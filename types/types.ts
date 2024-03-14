@@ -29,6 +29,7 @@ export type FacultyInfo = {
   department: Department;
   id: number;
   user_id: number;
+  mentee_count: number;
 };
 
 export type Faculty = FacultyInfo & {

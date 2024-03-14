@@ -13,6 +13,7 @@ export const DataManager = {
       department: data?.department?.name || "Not Assigned",
       id: data?.id || "Not Assigned",
       user_id: data?.user_id || "Not Assigned",
+      mentee_count: data?.mentees?.length || 0
     };
   },
   createFaculty(data: any): Faculty {
@@ -22,6 +23,7 @@ export const DataManager = {
       mentees: data.mentees.map((x: any) => this.createPartialStudent(x)),
       id: data?.id,
       user_id: data?.user_id,
+      mentee_count: data?.mentees.length
     };
   },
   createPartialStudent(data: any): PartialStudent {
@@ -162,6 +164,7 @@ export const DataManager = {
       discussion: data.discussion,
       mentee: this.createPartialStudent(data.mentee),
       mentor: this.createPartialFaculty(data.mentor),
+      id: data.id,
     };
   },
 };

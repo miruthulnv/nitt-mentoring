@@ -22,7 +22,7 @@
                         class="text-start bg-zinc-100 rounded-md p-2 block w-full">
                         <li class="font-bold text-center">{{ mentor.name }}</li>
                         <li class="font-semibold text-xs text-center">#{{ mentor.id }}</li>
-                        <li class="font-semibold text-xs text-center">{{ mentor.menteeCount }} Mentees</li>
+                        <li class="font-semibold text-xs text-center">{{ mentor.mentee_count }} Mentees</li>
                         <li>
                             <a :href="`/hod/faculty/${mentor.id}`"> <span class="sr-only">Manage Mentees</span>
                                 <svg class="block w-5 h-5 stroke-2 stroke-rose-700 mx-auto"

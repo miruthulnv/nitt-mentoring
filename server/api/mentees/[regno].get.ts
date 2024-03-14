@@ -29,6 +29,7 @@ export default defineEventHandler(async (e) => {
         },
         mentor: true,
         academics: true,
+        department: true
       }
     });
     if (mentee) {
