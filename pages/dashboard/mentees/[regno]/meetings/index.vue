@@ -69,7 +69,7 @@
         <div
             :class="`${viewOpen ? `visible` : `invisible`} rounded-xl w-full md:max-w-2xl bg-white fixed z-50 p-4 flex flex-col items-center`">
             <div class="flex justify-between w-full">
-                <div>Viewing Details For {{ meetings.find(x => x.meeting_number ===  currentMeeting) }}</div>
+                <div>Viewing Details For {{ meetings.find(x => x.meeting_number ===  currentMeeting)?.meeting_number }}</div>
                 <button class="self-end" @click="_ => viewOpen = false">
                     X
                 </button>

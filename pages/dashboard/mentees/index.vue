@@ -30,7 +30,7 @@
             <button :class="['text-white', 'rounded-md', 'p-2', !selectedMeetingNumber ?'bg-nitMaroon-300' : 'bg-nitMaroon-600']" :disabled="!selectedMeetingNumber" @click="exportToPDF">Export to PDF</button>
         </div>
         <div class="flex flex-col space-y-4">
-            <EditableMentee v-for="mentee in computedMentees" :mentee="mentee" :key="mentee.meeting_number" />
+            <EditableMentee v-for="mentee in computedMentees" :mentee="mentee" :key="mentee?.meeting_number" />
         </div>
         <!-- Start of PDF Template -->
         <div ref="pdfContainer" :style="{ visibility: exportToPdfMode ? 'visible' : 'hidden' }">
@@ -59,6 +59,7 @@
                         <th class="px-4 py-2 text-left border-r border-gray-700">Reg. No</th>
                         <th class="px-4 py-2 text-left border-r border-gray-700">Name</th>
                         <th class="px-4 py-2 text-left border-r border-gray-700">Discussion</th>
+                        <th class="px-4 py-2 text-left border-r border-gray-700">Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +68,7 @@
                         <td class="px-4 py-2 border-r border-gray-700">{{ meeting?.mentee?.register_no }}</td>
                         <td class="px-4 py-2 border-r border-gray-700">{{ meeting?.mentee?.name }}</td>
                         <td class="px-4 py-2 border-r border-gray-700">{{ meeting?.discussion }}</td>
+                        <td class="px-4 py-2 border-r border-gray-700">{{ new Date(meeting?.date).toLocaleDateString('en-GB') }}</td> 
                     </tr>
                 </tbody>
             </table>
@@ -77,21 +79,20 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import html2pdf from 'html2pdf.js';
 
 definePageMeta({
     middleware: ["level1"]
 });
 
 const mentees = await useMentee();
-const meetingNumbers = await useMeetings(mentees[0]?.mentor?.id);
+const meetingNumbers:any = await useMeetings(mentees[0]?.mentor?.id);
 
 const selectedMeetingNumber = ref("");
-const meetings = ref([]);
+const meetings = ref();
 
-watch(selectedMeetingNumber, async (newMeetingNumber) => {
+watch(selectedMeetingNumber, async (newMeetingNumber: string) => {
     if (newMeetingNumber) {
-        meetings.value = await useMeetingsNumber(parseInt(newMeetingNumber));
+        meetings.value = await useMeetingsNumber(parseInt(newMeetingNumber)) || [];
     } else {
         meetings.value = [];
     }

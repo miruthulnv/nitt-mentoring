@@ -31,7 +31,8 @@ export default defineEventHandler(async (e) => {
       const users = await client.prisma.faculty.findMany({
         where: { department_id: current.department_id },
         include: {
-          department: true
+          department: true,
+          mentees: true
         },
       });
       if (users) {
