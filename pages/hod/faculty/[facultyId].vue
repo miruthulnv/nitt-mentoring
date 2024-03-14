@@ -72,11 +72,11 @@ const faculty = await useFaculty(Number(facultyId))
 
 const mentees = (await useSudoMentee())?.map(mentee => ({ ...mentee, mentor: mentee.mentor || { name: "Not Assigned" } }))
 if (!faculty) nextTick(() => router.go(-1))
-else mentees.sort((a, b) => a.mentor_id === faculty.id && b.mentor_id !== faculty.id ? -1 : a.mentor_id !== faculty.id && b.mentor_id === faculty.id ? 1 : 0)
+else mentees?.sort((a, b) => a.mentor_id === faculty.id && b.mentor_id !== faculty.id ? -1 : a.mentor_id !== faculty.id && b.mentor_id === faculty.id ? 1 : 0)
 
 const menteeMap = new Map<string, number>();
 
-mentees.forEach(mentee => menteeMap.set(mentee.register_number, mentee.mentor_id || -1));
+mentees?.forEach(mentee => menteeMap.set(mentee.register_number, mentee.mentor_id || -1));
 
 const updateMentor = async (e: Event, regno: string) => {
     const box = e.currentTarget as HTMLInputElement;
