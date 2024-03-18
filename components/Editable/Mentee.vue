@@ -20,14 +20,14 @@
                                     stroke-linejoin="round" :d="`${AllIcons.userplus}`" />
                             </svg>
                         </a>
-                        <div class="flex items-center gap-2 max-w-xs mx-auto bg-nitMaroon-700 rounded-md py-2 px-4">
+                        <!-- <div class="flex items-center gap-2 max-w-xs mx-auto bg-nitMaroon-700 rounded-md py-2 px-4">
                             <span class="text-rose-200 text-xs sm:text-base">Download PDF</span>
                             <svg class="block w-5 h-5 stroke-2 stroke-rose-200 mx-auto" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24" aria-hidden="true">
                                 <path class="transition-all duration-500 transform ease-in-out" stroke-linecap="round"
                                     stroke-linejoin="round" :d="`${AllIcons.download}`" />         
                             </svg>
-                        </div>
+                        </div> -->
                     </div>
                 </div>              
             </div>
@@ -417,7 +417,6 @@ const updateSpecial = async (e: Event) => {
 const toggleEditProfile = async (val: boolean) => {
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-    console.log(val)
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/editable`, {
         method: "PATCH", body: JSON.stringify({ value: val }),
         headers: { "Authorization": `Bearer ${auth.value}` },
