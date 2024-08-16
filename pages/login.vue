@@ -18,12 +18,6 @@
                     <input name="password" id="password_field" type="password" placeholder="Password"
                         class="p-2 w-full lg:w-96 rounded-md shadow-md" />
                 </div>
-                <div class="flex w-full justify-end">
-                    <a href="javascript:alert(`Not Implemented`)"
-                        class="text-sm text-nitMaroon-500 font-semibold hover:underline">
-                        Forgot Password?
-                    </a>
-                </div>
                 <MiscMessage :class="`${message.text ? `opacity-100` : `opacity-0`} transition duration-500 ease-in-out w-full lg:w-96`"
                     :type="message.type">
                     {{ message.text }}</MiscMessage>
