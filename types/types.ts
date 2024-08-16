@@ -43,7 +43,7 @@ export type Faculty = FacultyInfo & {
 export type PartialStudent = {
   register_number: string;
   name: string;
-  year: number;
+  year: string;
   section: string;
   batch: number;
   department: Department;

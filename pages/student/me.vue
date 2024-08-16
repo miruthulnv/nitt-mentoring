@@ -400,7 +400,7 @@ const updateBasic = async (e: Event) => {
     const form = e.currentTarget;
     const formData = new FormData(form as HTMLFormElement);
     const data: Partial<Student> = {
-        year: Number(formData.get("student_year") as string),
+        year: formData.get("student_year") as string,
         batch: Number(formData.get("student_batch") as string),
         section: formData.get("student_section") as string,
     };
