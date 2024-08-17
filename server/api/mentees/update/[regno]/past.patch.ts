@@ -19,15 +19,15 @@ export default defineEventHandler(async (e) => {
       });
     }
     const regno = getRouterParam(e, "regno");
-    if (
-      Number(jwtPayload.level) < 1
-    ) {
-      throw createError({
-        statusCode: 401,
-        statusText: "You do not have permission.",
-      });
-    }
-    const currentUser = await client.prisma.faculty.findFirst({
+    // if (
+    //   Number(jwtPayload.level) < 1
+    // ) {
+    //   throw createError({
+    //     statusCode: 401,
+    //     statusText: "You do not have permission.",
+    //   });
+    // }
+    const currentUser = await client.prisma.students.findFirst({
       where: { user_id: Number(jwtPayload.id) },
     });
     if (!currentUser) {
