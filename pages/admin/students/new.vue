@@ -134,7 +134,7 @@ async function upload(record: studentData) {
                     // this won't happen
                     message.value.text = "Missing Fields."
                 case 401:
-                    message.value.text = "You aren't supposed to be here."
+                    message.value.text = "Please verify the data."
                     break;
                 default:
                     message.value.text = "An unknown error occurred";
@@ -186,7 +186,7 @@ const handleSubmit = async (e: Event) => {
                     // this won't happen
                     message.value.text = "Missing Fields."
                 case 401:
-                    message.value.text = "You aren't supposed to be here."
+                    message.value.text = "Please verify the data."
                     break;
                 default:
                     message.value.text = "An unknown error occurred";
