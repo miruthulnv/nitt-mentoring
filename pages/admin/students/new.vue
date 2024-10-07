@@ -166,7 +166,7 @@ const handleSubmit = async (e: Event) => {
         password: formData.get("password"),
         department: formData.get("department"),
         batch: Number(formData.get("batch")),
-        year: Number(formData.get("year")),
+        year: formData.get("year"),
         section: formData.get("section"),
     };
     console.log(creds);
