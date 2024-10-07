@@ -74,7 +74,7 @@
                         {{ basicMessage.text }}</MiscMessage>
                     <button type="submit"
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
-                        Edit Basic Info
+                        Update Basic Info
                     </button>
                 </form>
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" />
@@ -121,7 +121,7 @@
                         {{ personalMessage.text }}</MiscMessage>
                     <button type="submit"
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
-                        Edit Personal Info
+                        Update Personal Info
                     </button>
                 </form>
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" />
@@ -167,7 +167,7 @@
                         {{ fatherMessage.text }}</MiscMessage>
                     <button type="submit"
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
-                        Edit Father Info
+                        Update Father Info
                     </button>
                 </form>
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" />
@@ -212,7 +212,7 @@
                         {{ motherMessage.text }}</MiscMessage>
                     <button type="submit"
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
-                        Edit Mother Info
+                        Update Mother Info
                     </button>
                 </form>
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" /> <!-- SPECIAL ACHIEVEMENT INFO -->
@@ -233,7 +233,7 @@
                         {{ specialMessage.text }}</MiscMessage>
                     <button type="submit"
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
-                        Edit Special Info
+                        Update Special Info
                     </button>
                 </form>  
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" /> <!-- ACADEMIC INFO -->
@@ -305,7 +305,7 @@
                         {{ academicMessage.text }}</MiscMessage>
                     <button type="submit"
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
-                        Edit Academic Info
+                        Update Academic Info
                     </button>
                 </form>  
             </div>
