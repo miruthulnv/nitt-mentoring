@@ -26,13 +26,14 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="flex flex-wrap w-full justify-end items-center gap-5">
+        
+        <div class="flex flex-wrap w-full justify-end items-center gap-5">
             <select v-model="selectedMeetingNumber" class="border-2 border-nitMaroon-600 rounded-md outline-none md:min-w-[250px] py-1.5">
                 <option value="">Select Meeting Number</option>
                 <option v-for="(meeting, index) in meetingNumbers" :value="meeting.meeting_number">{{ meeting?.meeting_number }}</option>
             </select>
             <button :class="['text-white', 'rounded-md', 'p-2', !selectedMeetingNumber ?'bg-nitMaroon-300' : 'bg-nitMaroon-600']" :disabled="!selectedMeetingNumber" @click="exportToPDF">Export to PDF</button>
-        </div> -->
+        </div>
         <MiscMessage :class="`${message.text ? `opacity-100` : `opacity-0`} transition duration-500 ease-in-out`"
             :type="message.type">
             {{ message.text }}</MiscMessage>
@@ -62,7 +63,7 @@
             </tbody>
         </table>
         <!-- Start of PDF Template -->
-        <!-- <div ref="pdfContainer" :style="{ visibility: exportToPdfMode ? 'visible' : 'hidden' }">
+        <div ref="pdfContainer" :style="{ visibility: exportToPdfMode ? 'visible' : 'hidden' }">
             <div class="flex items-center justify-center gap-4 mb-3">
                 <img src="/nitt_logo_min.webp" class="w-20 h-20" />
                 <h1 class="text-lg lg:text-3xl font-bold pb-6">National Institute of Technology Tiruchirappalli</h1>
@@ -101,7 +102,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div> -->
+        </div>
         <!-- End of PDF Template -->
     </div>
 </template>
@@ -178,46 +179,46 @@ const classSection = ref("")
 const expandFilter = ref(false)
 const message = ref({ text: "", type: 'success' })
 
-// const selectedMeetingNumber = ref("");
-// const meetings = ref();
-// const meetingNumbers:any = await useMeetings(Number(facultyId));
+const selectedMeetingNumber = ref("");
+const meetings = ref();
+const meetingNumbers:any = await useMeetings(Number(facultyId));
 
-// watch(selectedMeetingNumber, async (newMeetingNumber: string) => {
-//     if (newMeetingNumber) {
-//         meetings.value = await useMeetingsNumber(parseInt(newMeetingNumber)) || [];
-//     } else {
-//         meetings.value = [];
-//     }
-// });
+watch(selectedMeetingNumber, async (newMeetingNumber: string) => {
+    if (newMeetingNumber) {
+        meetings.value = await useMeetingsNumber(parseInt(newMeetingNumber)) || [];
+    } else {
+        meetings.value = [];
+    }
+});
 </script>
 
 <script lang="ts">
-// const exportToPdfMode = ref(false);
+const exportToPdfMode = ref(false);
 
-// export default {
-//     name: 'app',
-//     methods: {
-//         exportToPDF() {
-//             if (typeof window !== 'undefined') {
-//                 exportToPdfMode.value = true;
-//                 const filename = `Mentor_Mentee_Meeting_List.pdf`;
-//                 import('html2pdf.js').then((html2pdf) => {
-//                     html2pdf.default(this.$refs.pdfContainer, {
-//                         margin: 0.7,
-//                         filename: filename,
-//                         image: { type: 'jpeg', quality: 1 },
-//                         html2canvas: { dpi: 192, letterRendering: true },
-//                         jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
-//                     });
-//                     exportToPdfMode.value = false;
-//                 }).catch(error => {
-//                     console.error('Failed to load html2pdf:', error);
-//                     exportToPdfMode.value = false;
-//                 });
-//             } else {
-//                 console.error('Cannot export to PDF: window is not defined.');
-//             }
-//         }
-//     }
-// }
+export default {
+    name: 'app',
+    methods: {
+        exportToPDF() {
+            if (typeof window !== 'undefined') {
+                exportToPdfMode.value = true;
+                const filename = `Mentor_Mentee_Meeting_List.pdf`;
+                import('html2pdf.js').then((html2pdf) => {
+                    html2pdf.default(this.$refs.pdfContainer, {
+                        margin: 0.7,
+                        filename: filename,
+                        image: { type: 'jpeg', quality: 1 },
+                        html2canvas: { dpi: 192, letterRendering: true },
+                        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+                    });
+                    exportToPdfMode.value = false;
+                }).catch(error => {
+                    console.error('Failed to load html2pdf:', error);
+                    exportToPdfMode.value = false;
+                });
+            } else {
+                console.error('Cannot export to PDF: window is not defined.');
+            }
+        }
+    }
+}
 </script>

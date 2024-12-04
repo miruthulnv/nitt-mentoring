@@ -30,7 +30,7 @@ export default defineEventHandler(async (e) => {
       {
         regno: string;
         name: string;
-        year: number;
+        year: string;
         section: string;
         batch: number;
         department: string;
@@ -62,7 +62,7 @@ export default defineEventHandler(async (e) => {
             register_no: body.regno,
             user_id: userCreated.id,
             name: body.name,
-            year: "",
+            year: body.year,
             section: body.section,
             batch: body.batch,
             department_id: body.department,

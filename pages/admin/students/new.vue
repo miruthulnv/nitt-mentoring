@@ -134,7 +134,7 @@ async function upload(record: studentData) {
                     // this won't happen
                     message.value.text = "Missing Fields."
                 case 401:
-                    message.value.text = "You aren't supposed to be here."
+                    message.value.text = "Please verify the data."
                     break;
                 default:
                     message.value.text = "An unknown error occurred";
@@ -166,7 +166,7 @@ const handleSubmit = async (e: Event) => {
         password: formData.get("password"),
         department: formData.get("department"),
         batch: Number(formData.get("batch")),
-        year: Number(formData.get("year")),
+        year: formData.get("year"),
         section: formData.get("section"),
     };
     console.log(creds);
@@ -186,7 +186,7 @@ const handleSubmit = async (e: Event) => {
                     // this won't happen
                     message.value.text = "Missing Fields."
                 case 401:
-                    message.value.text = "You aren't supposed to be here."
+                    message.value.text = "Please verify the data."
                     break;
                 default:
                     message.value.text = "An unknown error occurred";
