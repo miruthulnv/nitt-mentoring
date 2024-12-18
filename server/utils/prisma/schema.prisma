@@ -140,7 +140,7 @@ model academics {
 
 model meetings {
   date           DateTime
-  discussion     String
+  discussion     String   @db.Text
   mentee_id      String
   mentor_id      Int
   id             Int      @id @default(autoincrement())
