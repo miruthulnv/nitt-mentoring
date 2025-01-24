@@ -21,6 +21,9 @@
                 <MiscMessage :class="`${message.text ? `opacity-100` : `opacity-0`} transition duration-500 ease-in-out w-full lg:w-96`"
                     :type="message.type">
                     {{ message.text }}</MiscMessage>
+                    <div class="-mt-6 text-right w-full">
+                        <router-link to="/forgot-password" class="forgot-password-link">Forgot Password?</router-link>
+                    </div>
                 <button type="submit"
                     class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
                     Log In
@@ -52,7 +55,7 @@ if(loginerr){
         message.value.text = "Username / Password combination is incorrect."
     }else if(loginerr=='noUser'){
         message.value.text = "No such user exists."
-    }else if(loginerr='unknown'){
+    }else if(loginerr == 'unknown'){
         message.value.text = "An unknown error occurred";
     }
 }
