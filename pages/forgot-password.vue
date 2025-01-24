@@ -25,22 +25,10 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
+import { ref } from 'vue'
+import { useFetch } from 'nuxt/app'
 
 const message = ref({ type: "error", text: "" })
-
-// If there was an error during password reset
-let reseterr = route.query.reseterr as string;
-if(reseterr){
-    message.value.type = "error"
-    if(reseterr == 'invalid'){
-        message.value.text = "Invalid email address."
-    }else if(reseterr == 'notfound'){
-        message.value.text = "No account found with this email address."
-    }else if(reseterr == 'unknown'){
-        message.value.text = "An unknown error occurred."
-    }
-}
 
 const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -48,30 +36,24 @@ const handleSubmit = async (e: Event) => {
     const formData = new FormData(form as HTMLFormElement);
     const email = formData.get("email");
 
-    await useFetch(`/api/users/reset-password`, {
-        method: "POST",
-        body: JSON.stringify({ email }),
-        onResponse({ request, response, options }) {
-            if(response._data.message == 'Success'){
-                message.value.type = "info"
-                message.value.text = "Password reset instructions sent to your email."
+    try {
+        const { data } = await useFetch('/api/users/password-reset', {
+            method: 'POST',
+            body: JSON.stringify({ email }),
+        })
+
+        if (data.value) {
+            message.value = {
+                type: data.value.statusCode === 200 ? "info" : "error",
+                text: data.value.body.message
             }
-        },
-        onResponseError({ request, response, options }) {
-            message.value.type = "error"
-            switch (response.status) {
-                case 400:
-                    navigateTo('/forgot-password?reseterr=invalid')
-                    break;
-                case 404:
-                    navigateTo('/forgot-password?reseterr=notfound')
-                    break;
-                default:
-                    navigateTo('/forgot-password?reseterr=unknown')
-                    break;
-            }
-            abortNavigation()
         }
-    })
+    } catch (err) {
+        console.error('Error:', err);
+        message.value = {
+            type: "error",
+            text: "An unexpected error occurred."
+        }
+    }
 };
 </script>

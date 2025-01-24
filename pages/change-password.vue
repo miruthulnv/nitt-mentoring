@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import jwt_decode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 const route = useRoute();
 const router = useRouter();
@@ -74,16 +74,21 @@ const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const message = ref({ type: 'error', text: '' });
+const token = ref('');
 
 onMounted(() => {
-  const token = route.query.token as string;
-  if (!token) {
+  token.value = route.query.token as string;
+  if (!token.value) {
     message.value = { type: 'error', text: 'Invalid or missing token.' };
     return;
   }
 
   try {
-    const decoded = jwt_decode(token) as { email: string };
+    const decoded = jwtDecode(token.value) as { email: string; exp: number };
+    if (Date.now() >= decoded.exp * 1000) {
+      message.value = { type: 'error', text: 'Token has expired.' };
+      return;
+    }
     email.value = decoded.email;
   } catch (error) {
     message.value = { type: 'error', text: 'Invalid token.' };
@@ -108,12 +113,12 @@ const handleSubmit = async (e: Event) => {
   if (!validatePassword()) return;
 
   try {
-    const response = await useFetch('/api/users/change-password', {
-      method: 'POST',
+    const response = await useFetch('/api/users/password-reset', {
+      method: 'PATCH',
       body: JSON.stringify({
         email: email.value,
         newPassword: password.value,
-        token: route.query.token,
+        token: token.value,
       }),
     });
 
@@ -125,7 +130,7 @@ const handleSubmit = async (e: Event) => {
     setTimeout(() => {
       router.push('/login');
     }, 2000);
-  } catch (error) {
+  } catch (error:any) {
     message.value = { type: 'error', text: error.message || 'An error occurred while changing the password.' };
   }
 };
