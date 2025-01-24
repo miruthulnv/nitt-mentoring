@@ -28,7 +28,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { Student } from 'types/types';
+import { Student } from '~/types/types';
 
 definePageMeta({
     middleware: [
@@ -76,7 +76,7 @@ const handleSubmit = async (e: Event) => {
                     // this won't happen
                     message.value.text = "Missing Fields."
                 case 401:
-                    message.value.text = "You aren't supposed to be here."
+                    message.value.text = "Can't grant the access"
                     break;
                 default:
                     message.value.text = "An unknown error occurred";

@@ -369,7 +369,7 @@ const updateAcademic = async (e: Event) => {
                     // this won't happen
                     academicMessage.value.text = "Missing Fields."
                 case 401:
-                    academicMessage.value.text = "You aren't supposed to be here."
+                    academicMessage.value.text = "Cant Grant the access"
                     break;
                 default:
                     academicMessage.value.text = "An unknown error occurred";
@@ -404,7 +404,7 @@ const updateSpecial = async (e: Event) => {
                     // this won't happen
                     specialMessage.value.text = "Missing Fields."
                 case 401:
-                    specialMessage.value.text = "You aren't supposed to be here."
+                    specialMessage.value.text = "Can't grant the access"
                     break;
                 default:
                     specialMessage.value.text = "An unknown error occurred";
@@ -465,7 +465,7 @@ const updateBasic = async (e: Event) => {
                     // this won't happen
                     basicMessage.value.text = "Missing Fields."
                 case 401:
-                    basicMessage.value.text = "You aren't supposed to be here."
+                    basicMessage.value.text = "Can't grant the access"
                     break;
                 default:
                     basicMessage.value.text = "An unknown error occurred";
@@ -505,7 +505,7 @@ const updatePersonal = async (e: Event) => {
                     // this won't happen
                     personalMessage.value.text = "Missing Fields."
                 case 401:
-                    personalMessage.value.text = "You aren't supposed to be here."
+                    personalMessage.value.text = "Can't grant the access."
                     break;
                 default:
                     personalMessage.value.text = "An unknown error occurred";
@@ -545,7 +545,7 @@ const updateFather = async (e: Event) => {
                     // this won't happen
                     fatherMessage.value.text = "Missing Fields."
                 case 401:
-                    fatherMessage.value.text = "You aren't supposed to be here."
+                    fatherMessage.value.text = "Can't grant the access."
                     break;
                 default:
                     fatherMessage.value.text = "An unknown error occurred";
@@ -585,7 +585,7 @@ const updateMother = async (e: Event) => {
                     // this won't happen
                     motherMessage.value.text = "Missing Fields."
                 case 401:
-                    motherMessage.value.text = "You aren't supposed to be here."
+                    motherMessage.value.text = "Can't grant the access."
                     break;
                 default:
                     motherMessage.value.text = "An unknown error occurred";
