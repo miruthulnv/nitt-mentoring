@@ -69,7 +69,7 @@ definePageMeta({
         "level1"
     ]
 })
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const route = useRoute();
 
 const regno = route.params.regno as string;

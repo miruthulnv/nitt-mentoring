@@ -49,6 +49,7 @@ export type PartialStudent = {
   department: Department;
   mentor_id?: number;
   mentor?: FacultyInfo;
+  is_pg: boolean
 };
 
 export type Student = PartialStudent & {
@@ -79,10 +80,15 @@ export type Student = PartialStudent & {
       year_of_study: string;
       percentage: string;
     };
-    jee: {
+    jee?: {
       rank: number;
       score: number;
     };
+    pg_feilds?: {
+      ug_cgpa : number;
+      gate_score: number;
+      work_experience: string;
+    }
   };
   achievements: Partial<{
     positions_of_responsibility: string;
