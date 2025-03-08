@@ -28,13 +28,27 @@ export default defineEventHandler(async (e) => {
       });
     }
     const body = await readBody<{ mentor_id: number }>(e);
+
+    // Special case for unassigning a mentor
+    if (body.mentor_id === -1) {
+      await client.prisma.students.update({
+        where: { register_no: regno },
+        data: { mentor_id: null },
+      });
+      return {
+        message: "Successfully unassigned mentor.",
+      };
+    }
+
+    // For assigning a mentor, verify the mentor exists first
     const mentor = await client.prisma.faculty.findFirst({
       where: { id: body.mentor_id },
     });
-    if (mentor || body.mentor_id === -1) {
+    
+    if (mentor) {
       await client.prisma.students.update({
         where: { register_no: regno },
-        data: { mentor_id: body.mentor_id === -1 ? null : body.mentor_id },
+        data: { mentor_id: body.mentor_id },
       });
       return {
         message: "Successfully assigned mentor.",
@@ -42,6 +56,7 @@ export default defineEventHandler(async (e) => {
     } else {
       throw createError({
         statusCode: 404,
+        statusMessage: "Mentor not found.",
       });
     }
   }

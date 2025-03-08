@@ -7,21 +7,22 @@
                 </div>
                 <div class="flex flex-col items-start gap-2">
 
-                    <div class="text-base sm:text-xl lg:text-2xl font-semibold">{{ mentee.name }} #{{ mentee.register_number
-                    }}</div>
+                    <div class="text-base sm:text-xl lg:text-2xl font-semibold">{{ mentee.name }} #{{
+                        mentee.register_number
+                        }}</div>
                     <div class="py-2 flex flex-row gap-2">
                         <a :href="`/dashboard/mentees/${mentee.register_number}/meetings`"
                             class="flex items-center gap-2 max-w-xs mx-auto bg-nitMaroon-700 rounded-md py-2 px-4">
                             <span class="text-rose-200 text-xs sm:text-base">Check Meeting
                                 Details</span>
-                            <svg class="block w-5 h-5 stroke-2 stroke-rose-200 mx-auto" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <svg class="block w-5 h-5 stroke-2 stroke-rose-200 mx-auto"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                                 <path class="transition-all duration-500 transform ease-in-out" stroke-linecap="round"
                                     stroke-linejoin="round" :d="`${AllIcons.userplus}`" />
                             </svg>
                         </a>
                     </div>
-                </div>              
+                </div>
             </div>
             <button @click="toggleDrop">
                 <svg class="h-8 w-8 stroke-nitMaroon-600 stroke-2" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -48,16 +49,16 @@
                             <label for="student_year">Course</label>
                             <!-- <input type="number" name="student_year" id="student_year" class="font-semibold p-2 w-48"
                                 :value="mentee.year" /> -->
-                                <select name="student_year"  class="font-semibold p-2 w-48" id="student_year"   >
-                                    <option value="" hidden >{{ mentee.year }}</option>
-                                    <option value="UG">UG</option>
-                                    <option value="PG">PG</option>
-                                </select>
+                            <select name="student_year" class="font-semibold p-2 w-48" id="student_year">
+                                <option value="" hidden>{{ mentee.year }}</option>
+                                <option value="UG">UG</option>
+                                <option value="PG">PG</option>
+                            </select>
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_section">Section</label>
-                            <input type="text" name="student_section" id="student_section" class="font-semibold p-2 w-48"
-                                :value="mentee.section" />
+                            <input type="text" name="student_section" id="student_section"
+                                class="font-semibold p-2 w-48" :value="mentee.section" />
                         </div>
                     </div>
                     <MiscMessage
@@ -86,8 +87,8 @@
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_whatsapp">WhatsApp Number</label>
-                            <input type="text" name="student_whatsapp" id="student_whatsapp" class="font-semibold p-2 w-48"
-                                :value="mentee.personal_info.whatsapp_number" />
+                            <input type="text" name="student_whatsapp" id="student_whatsapp"
+                                class="font-semibold p-2 w-48" :value="mentee.personal_info.whatsapp_number" />
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_date_of_birth">Date Of Birth</label>
@@ -98,13 +99,14 @@
                             <label for="student_gender">Gender</label>
                             <select name="student_gender" id="student_gender" class="font-semibold p-2 w-48">
                                 <option value="male" :selected="mentee.personal_info.gender === `male`">Male</option>
-                                <option value="female" :selected="mentee.personal_info.gender === `female`">Female</option>
+                                <option value="female" :selected="mentee.personal_info.gender === `female`">Female
+                                </option>
                             </select>
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_email_id">Email ID</label>
-                            <input type="email" name="student_email_id" id="student_email_id" class="font-semibold p-2 w-48"
-                                :value="mentee.personal_info.email_id" />
+                            <input type="email" name="student_email_id" id="student_email_id"
+                                class="font-semibold p-2 w-48" :value="mentee.personal_info.email_id" />
                         </div>
                     </div>
                     <MiscMessage
@@ -134,8 +136,8 @@
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_f_mobile">Mobile Number</label>
-                            <input type="text" name="student_f_mobile" id="student_f_mobile" class="font-semibold p-2 w-48"
-                                :value="mentee.personal_info.father?.mobile_number" />
+                            <input type="text" name="student_f_mobile" id="student_f_mobile"
+                                class="font-semibold p-2 w-48" :value="mentee.personal_info.father?.mobile_number" />
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_f_whatsapp">WhatsApp Number</label>
@@ -179,8 +181,8 @@
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_m_mobile">Mobile Number</label>
-                            <input type="text" name="student_m_mobile" id="student_m_mobile" class="font-semibold p-2 w-48"
-                                :value="mentee.personal_info.mother?.mobile_number" />
+                            <input type="text" name="student_m_mobile" id="student_m_mobile"
+                                class="font-semibold p-2 w-48" :value="mentee.personal_info.mother?.mobile_number" />
                         </div>
                         <div class="grid grid-cols-2 items-center max-w-xs">
                             <label for="student_m_whatsapp">WhatsApp Number</label>
@@ -213,7 +215,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div v-for="field in specialFields" :key="field" class="flex flex-col items-center gap-2">
                             <label :htmlFor="field" class="w-full text-start">
-                                {{ field.split("_").map(x => x.slice(0, 1).toUpperCase() + x.slice(1)).join(" ") }}
+                                {{field.split("_").map(x => x.slice(0, 1).toUpperCase() + x.slice(1)).join(" ")}}
                             </label>
                             <textarea :name="field" :id="field" :value="mentee.achievements[field]"
                                 class="p-2 w-full lg:w-96 rounded-md shadow-md" />
@@ -227,9 +229,9 @@
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
                         Update Special Info
                     </button>
-                </form>                   
+                </form>
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" /> <!-- ACADEMIC INFO -->
-                <h2 class="mt-4 text-2xl font-bold uppercase mx-auto text-center">Academic Qualifications</h2>
+                <h2 class="mt-4 text-2xl font-bold uppercase mx-auto text-center">Academic Qualifications </h2>
                 <form class="flex flex-col items-center gap-4 pt-8" @submit="e => updateAcademic(e)">
                     <div class="font-bold text-xl uppercase">sslc(10th)</div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -277,19 +279,30 @@
                                 class="font-semibold p-2 w-72" :value="mentee.past.hsc?.percentage" />
                         </div>
                     </div>
-                    <div class="font-bold text-xl uppercase">jee</div>
+                    <div v-if="mentee.year != 'PG'" class="font-bold text-xl uppercase">jee</div>
+                    <div v-if="mentee.year == 'PG'" class="font-bold text-xl uppercase">UG Details</div>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        
-                        <div class="flex flex-col items-center max-w-xs gap-2">
+                        <div v-if="mentee.year == 'PG'" class="flex flex-col items-center max-w-xs gap-2">
+                            <label for="student_ug_cgpa">UG CGPA</label>
+                            <input type="text" name="student_ug_cgpa" id="student_ug_cgpa"
+                                class="font-semibold p-2 w-60" :value="mentee.past.pg_feilds?.ug_cgpa" />
+                        </div>
+                        <div v-if="mentee.year == 'PG'" class="flex flex-col items-center max-w-xs gap-2">
+                            <label for="student_gate_score">GATE Score</label>
+                            <input type="text" name="student_gate_score" id="student_gate_score"
+                                class="font-semibold p-2 w-60" :value="mentee.past.pg_feilds?.gate_score" />
+                        </div>
+                        <div v-else class="flex flex-col items-center max-w-xs gap-2">
                             <label for="student_jee_rank">Rank</label>
                             <input type="text" name="student_jee_rank" id="student_jee_rank"
                                 class="font-semibold p-2 w-60" :value="mentee.past.jee?.rank" />
                         </div>
-                        <div class="flex flex-col items-center max-w-xs gap-2">
+                        <div v-else class="flex flex-col items-center max-w-xs gap-2">
                             <label for="student_jee_score">Score</label>
                             <input type="text" name="student_jee_score" id="student_jee_score"
                                 class="font-semibold p-2 w-60" :value="mentee.past.jee?.score" />
                         </div>
+
                     </div>
                     <MiscMessage
                         :class="`${academicMessage.text ? `opacity-100` : `opacity-0`} transition duration-500 ease-in-out w-full lg:w-96`"
@@ -299,7 +312,7 @@
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
                         Update Academic Info
                     </button>
-                </form>  
+                </form>
             </div>
         </div>
     </div>
@@ -307,8 +320,12 @@
 <script setup lang="ts">
 import type { Student } from "@/types/types.js"
 const { mentee } = defineProps<{ mentee: Student }>()
-const tempMentee=mentee
+const tempMentee = mentee
 const editOpen = ref(false)
+console.log("***********TEMP MENTEE***********");
+
+console.log(tempMentee);
+console.log("***********TEMP MENTEE***********");
 
 const specialMessage = ref({ type: "error", text: "" })
 const basicMessage = ref({ type: "error", text: "" })
@@ -324,30 +341,36 @@ const updateAcademic = async (e: Event) => {
     const formData = new FormData(form as HTMLFormElement);
     const data: Partial<Student> = {
         past: {
-        sslc: {
-            institution: formData.get("student_sslc_institution") as string,
-            board_of_study: formData.get("student_sslc_board") as string,
-            year_of_study: formData.get("student_sslc_year") as string,
-            percentage: formData.get("student_sslc_cgpa") as string,
+            sslc: {
+                institution: formData.get("student_sslc_institution") as string,
+                board_of_study: formData.get("student_sslc_board") as string,
+                year_of_study: formData.get("student_sslc_year") as string,
+                percentage: formData.get("student_sslc_cgpa") as string,
+            },
+            hsc: {
+                institution: formData.get("student_hsc_institution") as string,
+                board_of_study: formData.get("student_hsc_board") as string,
+                year_of_study: formData.get("student_hsc_year") as string,
+                percentage: formData.get("student_hsc_cgpa") as string,
+            },
+            jee: {
+                rank: Number(formData.get("student_jee_rank") as string),
+                score: Number(formData.get("student_jee_score") as string),
+            },
+            pg_feilds: {
+                ug_cgpa: Number(formData.get("student_ug_cgpa") as string),
+                gate_score: Number(formData.get("student_gate_score") as string),
+                work_experience: formData.get("student_work_experience") as string,
+            }
         },
-        hsc: {
-            institution: formData.get("student_hsc_institution") as string,
-            board_of_study: formData.get("student_hsc_board") as string,
-            year_of_study: formData.get("student_hsc_year") as string,
-            percentage: formData.get("student_hsc_cgpa") as string,
-        },
-        jee: {
-            rank: Number(formData.get("student_jee_rank") as string),
-            score: Number(formData.get("student_jee_score") as string),
-        },
-    },
-        
+
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
     if (data.past) {
         mentee.past = data.past;
     }
+
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/past`, {
         method: "PATCH", body: JSON.stringify(data),
         headers: { "Authorization": `Bearer ${auth.value}` },
@@ -357,7 +380,7 @@ const updateAcademic = async (e: Event) => {
         },
         onResponseError({ request, response, options }) {
             // mentee.personal_info=tempMentee.personal_info
-            academicMessage.value.type = "error"
+            academicMessage.value.type = "error"    
             switch (response.status) {
                 case 400:
                     // this won't happen
@@ -367,6 +390,10 @@ const updateAcademic = async (e: Event) => {
                     break;
                 default:
                     academicMessage.value.text = "An unknown error occurred";
+                    console.log("*******HERE");
+                    
+                    console.log(academicMessage.value);
+                    
                     break;
             }
         }
@@ -382,7 +409,7 @@ const updateSpecial = async (e: Event) => {
     }
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-    mentee.achievements=creds
+    mentee.achievements = creds
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/special`, {
         method: "PATCH", body: JSON.stringify(creds),
         headers: { "Authorization": `Bearer ${auth.value}` },
@@ -391,7 +418,7 @@ const updateSpecial = async (e: Event) => {
             specialMessage.value.text = "Updated details."
         },
         onResponseError({ request, response, options }) {
-            mentee.achievements=tempMentee.achievements
+            mentee.achievements = tempMentee.achievements
             specialMessage.value.type = "error"
             switch (response.status) {
                 case 400:
@@ -433,15 +460,15 @@ const updateBasic = async (e: Event) => {
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-   if(data.year){
-       mentee.year=data.year
-   }
-   if(data.batch){
-       mentee.batch=data.batch
-   }
-   if(data.section){
-       mentee.section=data.section
-   }
+    if (data.year) {
+        mentee.year = data.year
+    }
+    if (data.batch) {
+        mentee.batch = data.batch
+    }
+    if (data.section) {
+        mentee.section = data.section
+    }
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/basic`, {
         method: "PATCH", body: JSON.stringify(data),
         headers: { "Authorization": `Bearer ${auth.value}` },
@@ -450,9 +477,9 @@ const updateBasic = async (e: Event) => {
             basicMessage.value.text = "Updated details."
         },
         onResponseError({ request, response, options }) {
-            mentee.year=tempMentee.year
-            mentee.batch=tempMentee.batch
-            mentee.section=tempMentee.section
+            mentee.year = tempMentee.year
+            mentee.batch = tempMentee.batch
+            mentee.section = tempMentee.section
             basicMessage.value.type = "error"
             switch (response.status) {
                 case 400:
@@ -483,7 +510,7 @@ const updatePersonal = async (e: Event) => {
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-    mentee.personal_info=data
+    mentee.personal_info = data
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/personal`, {
         method: "PATCH", body: JSON.stringify(data),
         headers: { "Authorization": `Bearer ${auth.value}` },
@@ -492,7 +519,7 @@ const updatePersonal = async (e: Event) => {
             personalMessage.value.text = "Updated details."
         },
         onResponseError({ request, response, options }) {
-            mentee.personal_info=tempMentee.personal_info
+            mentee.personal_info = tempMentee.personal_info
             personalMessage.value.type = "error"
             switch (response.status) {
                 case 400:
@@ -523,7 +550,7 @@ const updateFather = async (e: Event) => {
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-    mentee.personal_info.father=data
+    mentee.personal_info.father = data
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/father`, {
         method: "PATCH", body: JSON.stringify(data),
         headers: { "Authorization": `Bearer ${auth.value}` },
@@ -532,7 +559,7 @@ const updateFather = async (e: Event) => {
             fatherMessage.value.text = "Updated details."
         },
         onResponseError({ request, response, options }) {
-            mentee.personal_info.father=tempMentee.personal_info.father
+            mentee.personal_info.father = tempMentee.personal_info.father
             fatherMessage.value.type = "error"
             switch (response.status) {
                 case 400:
@@ -563,7 +590,7 @@ const updateMother = async (e: Event) => {
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-    mentee.personal_info.mother=data
+    mentee.personal_info.mother = data
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/mother`, {
         method: "PATCH", body: JSON.stringify(data),
         headers: { "Authorization": `Bearer ${auth.value}` },
@@ -572,7 +599,7 @@ const updateMother = async (e: Event) => {
             motherMessage.value.text = "Updated details."
         },
         onResponseError({ request, response, options }) {
-            mentee.personal_info.mother=tempMentee.personal_info.mother
+            mentee.personal_info.mother = tempMentee.personal_info.mother
             motherMessage.value.type = "error"
             switch (response.status) {
                 case 400:

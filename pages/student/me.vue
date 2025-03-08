@@ -350,6 +350,11 @@ const updateAcademic = async (e: Event) => {
                 rank: Number(formData.get("student_jee_rank") as string),
                 score: Number(formData.get("student_jee_score") as string),
             },
+            pg_feilds: {
+                ug_cgpa: Number(formData.get("student_ug_cgpa") as string),
+                gate_score: Number(formData.get("student_gate_score") as string),
+                work_experience: formData.get("student_work_experience") as string,
+            }
         },
 
     };
