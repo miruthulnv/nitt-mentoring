@@ -322,10 +322,6 @@ import type { Student } from "@/types/types.js"
 const { mentee } = defineProps<{ mentee: Student }>()
 const tempMentee = mentee
 const editOpen = ref(false)
-console.log("***********TEMP MENTEE***********");
-
-console.log(tempMentee);
-console.log("***********TEMP MENTEE***********");
 
 const specialMessage = ref({ type: "error", text: "" })
 const basicMessage = ref({ type: "error", text: "" })
@@ -390,9 +386,6 @@ const updateAcademic = async (e: Event) => {
                     break;
                 default:
                     academicMessage.value.text = "An unknown error occurred";
-                    console.log("*******HERE");
-                    
-                    console.log(academicMessage.value);
                     
                     break;
             }

@@ -308,12 +308,9 @@ definePageMeta({
 })
 
 const user = await useUserStore()
-//@ts-ignore
-console.log(user.student.year);
 const mentee = user.level === 0 ? user.student : false
 const tempMentee = mentee;
 //@ts-ignore
-// console.log(Object.hasOwn(tempMentee.pg_feilds));
 
 if (!mentee) navigateTo("/login")
 
@@ -355,6 +352,7 @@ const updateAcademic = async (e: Event) => {
                 gate_score: Number(formData.get("student_gate_score") as string),
                 work_experience: formData.get("student_work_experience") as string,
             }
+
         },
 
     };
