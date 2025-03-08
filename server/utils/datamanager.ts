@@ -38,6 +38,7 @@ export const DataManager = {
       mentor: data.mentor
         ? this.createPartialFaculty(data.mentor)
         : data.mentor,
+      is_pg: data.is_pg || false,
     };
   },
   createStudent(data: any): Student {
@@ -52,6 +53,7 @@ export const DataManager = {
       meetings: data.meetings?.map((x: any) =>
         this.createPartialMeeting({ ...x })
       ) || [],
+      is_pg: data.is_pg || false,
       enable_edit_profile: data.editable_personal,
       personal_info: {
         blood_group: data.blood_group,
@@ -93,6 +95,12 @@ export const DataManager = {
         jee: {
           rank: data.jee_rank,
           score: data.jee_score,
+        },
+        pg_feilds: {
+          ug_cgpa: data.ug_cgpa || 0,
+          gate_score: data.gate_score || 0,
+          work_experience: data.work_experience || "Not Provided",
+
         },
       },
       achievements: {

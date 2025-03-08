@@ -11,6 +11,10 @@ export async function useMe(): Promise<Student | false> {
         headers: { "Authorization": `Bearer ${auth.value}` },
       },
     );
+    console.log("*************************");
+    console.log(user);
+    console.log("*************************");
+    
     return user;
   } catch (e) {
     return false;

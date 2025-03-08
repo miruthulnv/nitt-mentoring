@@ -9,10 +9,17 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
     userStore.id = user.id;
     userStore.username = user.username;
     userStore.level = user.level;
+    
     if (user.level === 0) {
       const student = await useMe();
       // @ts-ignore
+      userStore.student.is_pg = student.year === "PG";      
+      // @ts-ignore
       userStore.student = student;
+      console.log("***************************");
+      
+      console.log(student);
+      
       userStore.department = student ? student.department.name : "NONE"
     }
   } catch (e) {

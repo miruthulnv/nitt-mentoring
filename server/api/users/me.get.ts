@@ -1,5 +1,12 @@
 import { Client } from "../../utils/database.js";
 
+interface findUserType {
+  userName: string,
+  level: number,
+  id: number | string,
+  is_pg?: boolean
+}
+
 const client = new Client();
 export default defineEventHandler(async (e) => {
   const auth = getHeader(e, "Authorization");
@@ -22,13 +29,13 @@ export default defineEventHandler(async (e) => {
       where: { id: Number(jwtPayload.id) },
     });
     if (user) {
-      return {
-        username: user.username,
-        level: user.level,
-        id: user.id,
+      const result: findUserType = {
+        userName: user.username,
+        level:    user.level,
+        id:       user.id,
       };
+      return result;
     } else {
-      // This shouldn't happen
       throw createError({
         statusCode: 404,
       });

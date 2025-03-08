@@ -33,6 +33,8 @@
                 <th>Batch</th>
                 <th v-if="mentees[0]?.mentor">Mentor</th>
                 <th>Meetings</th>
+                <th>update</th>
+                <th>delete</th>
             </thead>
             <tbody>
                 <tr v-for="mentee in computedMentees" :key="mentee.register_number"
@@ -53,16 +55,64 @@
                             </svg>
                         </a>
                     </td>
+                    <td>
+                        <button @click="openUpdateDialog(mentee)" class="bg-blue-200 hover:bg-blue-400 hover:text-white text-black rounded-md p-2 ml-2">Update</button>
+                    </td>
+                    <td>
+                        <button @click="deleteMentee(mentee.register_number)" class="bg-red-300 hover:bg-red-600 hover:text-white text-black rounded-md p-2">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
         <div v-if="!computedMentees.length">No mentees found</div>
     </div>
+    <!-- <dialog>
+    <template v-if="showUpdateDialog"></template>
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div class="mt-3 text-center">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Update Mentee</h3>
+                    <div class="mt-2 px-7 py-3">
+                        <input type="text" v-model="selectedMentee.name" placeholder="Name" class="w-full p-2 border rounded-md" />
+                        <input type="text" v-model="selectedMentee.batch" placeholder="Batch" class="w-full p-2 border rounded-md mt-2" />
+                        <input type="text" v-model="selectedMentee.section" placeholder="Section" class="w-full p-2 border rounded-md mt-2" />
+                        <input type="text" v-model="selectedMentee.register_number" placeholder="Reg No" class="w-full p-2 border rounded-md mt-2" />
+                    </div>
+                    <div class="items-center px-4 py-3">
+                        <button @click="selectedMentee && updateMentee(selectedMentee)" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-600">Update</button>
+                        <button @click="showUpdateDialog = false" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 mt-2">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog> -->
 </template>
 
 <script setup lang="ts">
 import type { PartialStudent, Faculty, User } from "@/types/types.js"
 const { mentees } = defineProps<{ mentees: (PartialStudent)[] }>()
+
+const message = ref({ type: '', text: '' });
+
+const deleteMentee = (registerNumber: string) => {
+    const index = mentees.findIndex(mentee => mentee.register_number === registerNumber);
+    console.log(mentees[index],registerNumber);
+    
+    fetch(`/api/mentees/${registerNumber}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (response.ok) {
+        mentees.splice(index, 1);
+        message.value = { type: 'success', text: 'Mentee deleted successfully' };
+        } else {
+        message.value = { type: 'error', text: 'Failed to delete mentee' };
+        }
+    })
+    .catch(() => {
+        message.value = { type: 'error', text: 'An error occurred' };
+    });
+};
 
 const computedMentees = computed(() => {
     return !expandFilter.value ? mentees :

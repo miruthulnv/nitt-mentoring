@@ -45,7 +45,7 @@ definePageMeta({
     ]
 })
 const userStore = useUserStore()
-console.log(userStore.department)
+// console.log(userStore.department)
 const mentors = await useAllFaculty();
 
 const computedmentors = computed(() => {

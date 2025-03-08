@@ -20,14 +20,6 @@
                                     stroke-linejoin="round" :d="`${AllIcons.userplus}`" />
                             </svg>
                         </a>
-                        <!-- <div class="flex items-center gap-2 max-w-xs mx-auto bg-nitMaroon-700 rounded-md py-2 px-4">
-                            <span class="text-rose-200 text-xs sm:text-base">Download PDF</span>
-                            <svg class="block w-5 h-5 stroke-2 stroke-rose-200 mx-auto" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                                <path class="transition-all duration-500 transform ease-in-out" stroke-linecap="round"
-                                    stroke-linejoin="round" :d="`${AllIcons.download}`" />         
-                            </svg>
-                        </div> -->
                     </div>
                 </div>              
             </div>
@@ -235,7 +227,7 @@
                         class="rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 bg-nitMaroon-600 text-white py-2 px-8">
                         Update Special Info
                     </button>
-                </form>  
+                </form>                   
                 <hr class="mt-4 border-1 border-nitMaroon-600 max-w-6xl mx-auto" /> <!-- ACADEMIC INFO -->
                 <h2 class="mt-4 text-2xl font-bold uppercase mx-auto text-center">Academic Qualifications</h2>
                 <form class="flex flex-col items-center gap-4 pt-8" @submit="e => updateAcademic(e)">
@@ -353,7 +345,9 @@ const updateAcademic = async (e: Event) => {
     };
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
-    mentee.past=data.past
+    if (data.past) {
+        mentee.past = data.past;
+    }
     await useFetch<{ token: string }>(`/api/mentees/update/${mentee.register_number}/past`, {
         method: "PATCH", body: JSON.stringify(data),
         headers: { "Authorization": `Bearer ${auth.value}` },
