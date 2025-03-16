@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         {
           hid: "site-name",
           name: "og:site-name",
-          content: "NITT Mentoring"
+          content: "NITT Mentoring",
         },
         { name: "format-detection", content: "telephone=no" },
       ],
@@ -24,15 +24,12 @@ export default defineNuxtConfig({
         { rel: "shortcut icon", type: "image/x-icon", href: "/favicon.ico" },
       ],
     },
-/*    pageTransition: {
+    /*    pageTransition: {
       name: "rotate",
       mode: "out-in",
     },*/
     layoutTransition: { name: "layout", mode: "out-in" },
   },
   devtools: { enabled: true },
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
 });

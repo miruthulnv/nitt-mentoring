@@ -1,30 +1,35 @@
 import { jwtVerify, SignJWT } from "jose";
+import config from "./../../config";
 
 // Encode KEY into a Uint8Array
-const secret = new TextEncoder().encode(process.env.JWT_KEY);
+const secret = new Uint8Array(Buffer.from(config.JWT_KEY, "hex"));
+// const secret = new TextEncoder().encode(config.JWT_KEY);
 // const privateKey = await importPKCS8(process.env.JWT_KEY, "RS256")
 
 /** Generate JWT */
 export async function createJwt(
   userId: string,
-  level: number,
+  level: number
 ): Promise<string> {
-  const signer = new SignJWT({ id: userId, level: level }).setProtectedHeader({
-    alg: "HS256",
-  }).setExpirationTime("2h");
+  const signer = new SignJWT({ id: userId, level: level })
+    .setProtectedHeader({
+      alg: "HS256",
+    })
+    .setExpirationTime("2h");
   return await signer.sign(secret);
 }
 
 /** Verify the JWT and return the payload. */
 export async function verifyJwt(
-  token: string,
+  token: string
 ): Promise<{ id: string; level: number; exp: number } | false> {
   try {
     const data = await jwtVerify(token, secret);
     // Check whether the payload has "id" and "exp".
     // This is most likely true.
     if (
-      Object.hasOwn(data.payload, "id") && Object.hasOwn(data.payload, "exp") &&
+      Object.hasOwn(data.payload, "id") &&
+      Object.hasOwn(data.payload, "exp") &&
       Object.hasOwn(data.payload, "level")
     ) {
       return data.payload as { id: string; level: number; exp: number };
