@@ -14,7 +14,7 @@
       Loading student information...
     </div>
 
-    <div v-else-if="mentee" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div v-else-if="mentee" class="max-w-2xl mx-auto">
       <!-- Basic Information -->
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h2 class="text-xl font-semibold mb-4 text-nitMaroon-600">Basic Information</h2>
@@ -77,77 +77,6 @@
           </button>
         </form>
       </div>
-
-      <!-- PG Specific Information -->
-      <div v-if="basicForm.year === 'PG'" class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold mb-4 text-nitMaroon-600">PG Information</h2>
-        <form @submit.prevent="updatePgInfo" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">UG CGPA</label>
-            <input 
-              v-model="pgForm.ug_cgpa" 
-              type="number" 
-              step="0.01" 
-              min="0" 
-              max="10"
-              class="w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">GATE Score</label>
-            <input 
-              v-model="pgForm.gate_score" 
-              type="number" 
-              class="w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Work Experience</label>
-            <textarea 
-              v-model="pgForm.work_experience" 
-              class="w-full p-2 border border-gray-300 rounded-md"
-              rows="3"
-            ></textarea>
-          </div>
-          <button 
-            type="submit" 
-            class="w-full bg-nitMaroon-600 text-white py-2 px-4 rounded-md hover:bg-nitMaroon-700 transition-colors"
-            :disabled="updating"
-          >
-            {{ updating ? 'Updating...' : 'Update PG Info' }}
-          </button>
-        </form>
-      </div>
-
-      <!-- UG Specific Information -->
-      <div v-if="basicForm.year === 'UG'" class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold mb-4 text-nitMaroon-600">UG Information</h2>
-        <form @submit.prevent="updateUgInfo" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">JEE Rank</label>
-            <input 
-              v-model="ugForm.jee_rank" 
-              type="number" 
-              class="w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">JEE Score</label>
-            <input 
-              v-model="ugForm.jee_score" 
-              type="number" 
-              class="w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <button 
-            type="submit" 
-            class="w-full bg-nitMaroon-600 text-white py-2 px-4 rounded-md hover:bg-nitMaroon-700 transition-colors"
-            :disabled="updating"
-          >
-            {{ updating ? 'Updating...' : 'Update UG Info' }}
-          </button>
-        </form>
-      </div>
     </div>
 
     <div v-else class="text-red-500 font-medium">
@@ -182,17 +111,6 @@ const basicForm = ref({
   department_id: ''
 })
 
-const pgForm = ref({
-  ug_cgpa: 0,
-  gate_score: 0,
-  work_experience: ''
-})
-
-const ugForm = ref({
-  jee_rank: 0,
-  jee_score: 0
-})
-
 // Fetch student data
 onMounted(async () => {
   try {
@@ -207,12 +125,12 @@ onMounted(async () => {
           Authorization: `Bearer ${useCookie('nitt_token').value}`
         }
       })
-    ])
+    ]) as [PartialStudent, Department[]]
 
     mentee.value = studentData
     departments.value = deptData
 
-    // Populate forms
+    // Populate form
     basicForm.value = {
       register_number: studentData.register_number,
       name: studentData.name,
@@ -220,17 +138,6 @@ onMounted(async () => {
       section: studentData.section || '',
       batch: studentData.batch || 0,
       department_id: studentData.department?.id || ''
-    }
-
-    pgForm.value = {
-      ug_cgpa: studentData.ug_cgpa || 0,
-      gate_score: studentData.gate_score || 0,
-      work_experience: studentData.work_experience || ''
-    }
-
-    ugForm.value = {
-      jee_rank: studentData.jee_rank || 0,
-      jee_score: studentData.jee_score || 0
     }
   } catch (error) {
     console.error('Error fetching student data:', error)
@@ -260,46 +167,6 @@ async function updateBasicInfo() {
   } catch (error) {
     console.error('Error updating basic info:', error)
     alert('Failed to update basic information')
-  } finally {
-    updating.value = false
-  }
-}
-
-async function updatePgInfo() {
-  updating.value = true
-  try {
-    await $fetch(`/api/mentees/update/${regno}/pg`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${useCookie('nitt_token').value}`
-      },
-      body: pgForm.value
-    })
-    
-    alert('PG information updated successfully!')
-  } catch (error) {
-    console.error('Error updating PG info:', error)
-    alert('Failed to update PG information')
-  } finally {
-    updating.value = false
-  }
-}
-
-async function updateUgInfo() {
-  updating.value = true
-  try {
-    await $fetch(`/api/mentees/update/${regno}/ug`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${useCookie('nitt_token').value}`
-      },
-      body: ugForm.value
-    })
-    
-    alert('UG information updated successfully!')
-  } catch (error) {
-    console.error('Error updating UG info:', error)
-    alert('Failed to update UG information')
   } finally {
     updating.value = false
   }

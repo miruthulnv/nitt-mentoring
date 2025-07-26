@@ -144,8 +144,18 @@
     })
   })
   
-  function editMentee(mentee: PartialStudent) {
-    emit('edit', mentee)
+  async function editMentee(mentee: PartialStudent) {
+    const auth = useCookie<string>("nitt_token")
+    if (!auth.value) return
+
+    try {
+      // Navigate directly to the edit page
+      console.log(mentee);
+      await navigateTo(`/hod/students/${mentee.register_number}/edit`)
+    } catch (err) {
+      console.error(err)
+      alert("An error occurred while navigating to edit page.")
+    }
   }
   
   async function deleteMentee(mentee: PartialStudent) {

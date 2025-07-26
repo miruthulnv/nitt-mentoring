@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-4 p-2 mt-12">
         <h1 class="text-2xl uppercase font-bold">All Students</h1>
-        <ListMentee v-if="mentees.length" :mentees="mentees" @deleted="handleDeleted" @edit="handleEdit" />
+        <ListMentee v-if="mentees.length" :mentees="mentees" @deleted="handleDeleted" />
         <div v-else class="text-lg text-gray-600">Loading students...</div>
     </div>
 </template>
@@ -36,9 +36,5 @@ function handleDeleted(register_number: string) {
     mentees.value = mentees.value.filter(
         m => m.register_number !== register_number
     )
-}
-
-function handleEdit(register_number: string) {
-    navigateTo(`/hod/students/${register_number}/edit`)
 }
 </script>
