@@ -5,7 +5,7 @@
             <h1 class="text-2xl font-bold">Create Student Account</h1>
             
             <!-- Student Type Selection -->
-            <div class="flex flex-col items-center gap-4 w-full">
+            <!-- <div class="flex flex-col items-center gap-4 w-full">
                 <select 
                     v-model="studentType" 
                     class="p-2 w-full lg:w-96 rounded-md shadow-md"
@@ -13,7 +13,7 @@
                     <option value="UG">Undergraduate Student</option>
                     <option value="PG">Postgraduate Student</option>
                 </select>
-            </div>
+            </div> -->
 
             <form class="flex flex-col items-center gap-4 pt-8" @submit="e => handleSubmit(e)">
                 <div class="flex flex-col items-center gap-2">
@@ -44,11 +44,12 @@
                     <select name="year" class="p-2 w-full rounded-md shadow-md" >
                         <option value="" hidden>Course</option>
                         <option value="UG">UG</option>
+                        <option value="PG">PG</option>
                     </select>
                     <input name="section" type="text" class="p-2 w-full rounded-md shadow-md" placeholder="Section" />
                 </div>
 
-                <div v-else class="flex flex-col items-center gap-2 w-full">
+                <!-- <div v-else class="flex flex-col items-center gap-2 w-full">
                     <div class="flex flex-row items-center gap-2 w-full">
                         <input name="ugCGPA" type="number" step="0.01" min="0" max="10" 
                             class="p-2 w-full rounded-md shadow-md" placeholder="UG CGPA" />
@@ -63,7 +64,7 @@
                             <option value="PG">PG</option>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="flex flex-col items-center gap-2">
                     <label htmlFor="dept_field" class="w-full text-start">
@@ -124,6 +125,9 @@ const handleFileUpload = (file: File) => {
 
         data.forEach((element) => {
             element.regno = element.regno.toString();
+            element.ugCGPA = 0;
+            element.gateScore = 0
+            element.workExperience = ""
         });
 
         stud.value = data;
@@ -184,7 +188,7 @@ const route = useRoute();
 const message = ref({ type: "error", text: "" })
 
 const dept = await useDept()
-
+  const emit = defineEmits(['deleted'])
 const handleSubmit = async (e: Event) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -199,16 +203,16 @@ const handleSubmit = async (e: Event) => {
     };
 
     // Add conditional fields based on student type
-    if (studentType.value === 'UG') {
+    if (creds.year === 'UG') {
         creds.batch = Number(formData.get("batch"));
         creds.section = formData.get("section") as string;
     } else {
-        creds.ugCGPA = Number(formData.get("ugCGPA"));
-        creds.gateScore = Number(formData.get("gateScore"));
-        creds.workExperience = formData.get("workExperience") as string;
+        creds.ugCGPA =0;
+        creds.gateScore = 0;
+        creds.workExperience = "";
+        console.log(creds);
     }
 
-    console.log(creds);
     const auth = useCookie<string>("nitt_token");
     if (!auth.value) return false;
     await useFetch<{ token: string }>(`/api/mentees/new`, {

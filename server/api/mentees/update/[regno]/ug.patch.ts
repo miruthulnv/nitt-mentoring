@@ -28,33 +28,27 @@ export default defineEventHandler(async (e) => {
 
   const regno = getRouterParam(e, "regno");
   const body = await readBody<{
-    name?: string;
-    year?: string;
-    section?: string;
-    batch?: number;
-    department_id?: string;
+    jee_rank?: number;
+    jee_score?: number;
   }>(e);
 
   try {
     await client.prisma.students.update({
       where: { register_no: regno },
       data: {
-        name: body.name,
-        year: body.year,
-        section: body.section,
-        batch: body.batch,
-        department_id: body.department_id,
+        jee_rank: body.jee_rank,
+        jee_score: body.jee_score,
       },
     });
 
     return {
-      message: "Basic information updated successfully.",
+      message: "UG information updated successfully.",
     };
   } catch (error) {
-    console.error("Error updating basic info:", error);
+    console.error("Error updating UG info:", error);
     throw createError({
       statusCode: 500,
-      statusText: "Failed to update basic information.",
+      statusText: "Failed to update UG information.",
     });
   }
-});
+}); 

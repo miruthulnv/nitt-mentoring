@@ -92,12 +92,20 @@
               </a>
             </td>
             <td>
-              <button
-                class="bg-red-500 text-white rounded-md p-2 hover:bg-red-600 transition-colors"
-                @click="deleteMentee(mentee.register_number)"
-              >
-                Delete
-              </button>
+              <div class="flex gap-2 justify-center">
+                <button
+                  class="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition-colors"
+                  @click="editMentee(mentee)"
+                >
+                  Edit
+                </button>
+                <button
+                  class="bg-red-500 text-white rounded-md p-2 hover:bg-red-600 transition-colors"
+                  @click="deleteMentee(mentee)"
+                >
+                  Delete
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -113,7 +121,7 @@
   import type { PartialStudent } from "@/types/types.js";
   
   const props = defineProps<{ mentees: PartialStudent[] }>()
-  const emit = defineEmits(['deleted'])
+  const emit = defineEmits(['deleted', 'edit'])
   
   const mentorName = ref("")
   const name = ref("")
@@ -136,23 +144,37 @@
     })
   })
   
-  async function deleteMentee(register_number: string) {
+  function editMentee(mentee: PartialStudent) {
+    emit('edit', mentee)
+  }
+  
+  async function deleteMentee(mentee: PartialStudent) {
     const auth = useCookie<string>("nitt_token")
+    console.log("lol")
     if (!auth.value) return
   
     try {
-      const { error } = await useFetch(`/api/mentees/delete/${register_number}`, {
+      const { error } = await useFetch(`/api/mentees/delete/${mentee.register_number}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${auth.value}`,
         }
       })
-  
+      console.log(mentee);
+      await useFetch(`/api/users/delete/${mentee.register_number}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${auth.value}`,
+        }
+      });
+
       if (error.value) {
         console.error("Delete failed", error.value)
         alert("Failed to delete mentee. Please try again.")
-      } else {
-        emit('deleted', register_number)
+      }
+       else {
+        emit('deleted', mentee.register_number)
+        console.log("here")
       }
     } catch (err) {
       console.error(err)
